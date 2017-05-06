@@ -80,7 +80,7 @@ app.get("/results", function(req, res) {
             });
             
             console.log(query);
-            query = query.replace(/\+/gi, ' '); // чтобы вывести на экран текст запроса без плюсов
+            query = query.replace(/\+{1,}/gi, ' '); // чтобы вывести на экран текст запроса без плюсов
             console.log(query);
             
             // вывод данных на экран
