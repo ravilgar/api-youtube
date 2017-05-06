@@ -7,8 +7,8 @@ const google = require('googleapis');
 
 const PORT = process.env.PORT || 3000;
 
+import API_KEY from 'keys/key';
 
-const API_KEY = 'AIzaSyBi1HziXDXX9l74Z0Vptx2jM1wRUB1wW8g';
 const youtube = google.youtube({
     version: 'v3',
     auth: API_KEY
