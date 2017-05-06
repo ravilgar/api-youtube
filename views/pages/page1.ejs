@@ -1,0 +1,10 @@
+<h1>YOUTUBE API</h1>
+
+<form action="/addvideos" method="POST">
+	<input type="text" name="nameOfVideo" placeholder="название ролика">
+	<button>искать</button>	
+</form>
+
+<% videos.forEach(function(video){ %>
+  <li><%= video %></li>
+<% }); %>

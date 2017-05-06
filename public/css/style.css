@@ -1,0 +1,15 @@
+.title {
+    cursor: pointer;
+    color: blue;
+    text-align: center;
+    font-size: 12px;
+    font-family: sans-serif;
+}
+
+.title:hover {
+    color: #4ea8cc;
+}
+
+.player {
+    display: none;
+}

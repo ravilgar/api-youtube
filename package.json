@@ -1,0 +1,17 @@
+{
+  "name": "api-youtube",
+  "version": "1.0.0",
+  "description": "Assignment for internship.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ravil Garipov",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^2.5.6",
+    "express": "^4.15.2",
+    "googleapis": "^19.0.0",
+    "request": "^2.81.0"
+  }
+}
