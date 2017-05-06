@@ -14,19 +14,20 @@ const youtube = google.youtube({
     auth: API_KEY
 });
 
-
-
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public/js'));
 app.use(express.static(__dirname + '/public/css'));
 
-
+// обрабатывает запрос на первый экран
 app.get("/", function(req, res) {
     res.render("page1");
 });
 
+// обрабатывает запрос на второй экран
 app.get("/results", function(req, res) {
-    let query = req.query.search;
+    let query = req.query.search; // значение поискового запроса
+    
+    // параметры для запроса данных, передаем в youtube.search.list
     let queryOptions = {
         'part': 'snippet',
         'maxResults': '20',
@@ -36,19 +37,16 @@ app.get("/results", function(req, res) {
         'type': 'video'
     };
 
-
+    // получаем 20 (максимум) новых видеороликов
     youtube.search.list(queryOptions, function(err, data) {
         if (err) {
             console.error(err);
             return;
         }
-        // массив данных
+        // массив данных (найденные ролики и информация о просмотрах)
         let newData = [];
 
-        console.log(data.items[0]);
-        // console.log(data);
-
-        // получить массив видео по id
+        // получить id видеороликов через запятую
         let concotanateID = (function() {
             let arr = [];
             for (let i = 0; i < data.items.length; i++) {
@@ -56,7 +54,6 @@ app.get("/results", function(req, res) {
             }
             return arr.join(',');
         })();
-        console.log(concotanateID);
 
         // получить данные по количеству просмотров
         youtube.videos.list({
@@ -67,33 +64,30 @@ app.get("/results", function(req, res) {
                 console.error(err);
                 return;
             }
-            console.log(data1.items[0].statistics.viewCount);
-            // console.log(data);
 
-            // объединим массивы данных
+            // объединим массивы данных с найденными видео и по количеству просмотров
             for (let i = 0; i < data.items.length; i++) {
                 newData[i] = {
                     search: data.items[i],
                     statistics: data1.items[i].statistics
                 };
             }
-            console.log(newData[0]);
+            
+            // сортировка полученных значений по количеству просмотров от большего к меньшему
             newData.sort(function(a, b) {
                 return parseFloat(b.statistics.viewCount) - parseFloat(a.statistics.viewCount);
             });
-
+            
+            console.log(query);
+            
+            // вывод данных на экран
             res.render("page2", {
                 query: query,
                 data: newData
             });
         });
 
-
     });
-
-
-
-
 
 });
 
