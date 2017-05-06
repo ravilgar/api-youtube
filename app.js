@@ -26,13 +26,14 @@ app.get("/", function(req, res) {
 // обрабатывает запрос на второй экран
 app.get("/results", function(req, res) {
     let query = req.query.search; // значение поискового запроса
+    query = query.replace(/\s{1,}/gi, '+'); // чтобы передать текст запроса из нескольких слов, меняем все пробелы на '+'
     
     // параметры для запроса данных, передаем в youtube.search.list
     let queryOptions = {
         'part': 'snippet',
         'maxResults': '20',
         'order': 'date',
-        // 'order': 'viewCount',
+        'relevanceLanguage': 'ru',  // предпочтительны запросы на русском, (можно удалить)
         'q': query,
         'type': 'video'
     };
@@ -78,6 +79,8 @@ app.get("/results", function(req, res) {
                 return parseFloat(b.statistics.viewCount) - parseFloat(a.statistics.viewCount);
             });
             
+            console.log(query);
+            query = query.replace(/\+/gi, ' '); // чтобы вывести на экран текст запроса без плюсов
             console.log(query);
             
             // вывод данных на экран
